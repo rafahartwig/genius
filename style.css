@@ -1,0 +1,55 @@
+body{
+    margin:0;
+}
+
+nav{
+    background-color: grey;
+}
+
+ul{
+    display: flex;
+    list-style-type: none;
+    justify-content: space-between;
+}
+
+.container{     
+    background-color:rgb(230, 230, 230, 0.5);
+    border-radius: 30%;  
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin:0 auto;
+}
+
+.box{
+    flex-basis: 45%;
+    height: 25vh;
+    margin:1%;
+    align-content: center;
+}
+
+.red{
+    background-color:rgba(230, 134, 134, 1.5);
+    border-radius:0 100px 0 0;
+    transition: background-color 1s;
+}
+
+.blue{
+    background-color: rgba(0, 148, 247, 0.5);
+    border-radius:0 0 100px 0;
+    transition: background-color 1s;
+}
+
+.yellow{
+    background-color:  rgb(238, 238, 158);
+    border-radius:0 0 0 100px;
+    transition: background-color 1s;
+}
+
+.green{
+    background-color:rgba(0, 255, 0, 0.5);
+    border-radius:100px 0 0 0;
+    transition: background-color 1s;
+}

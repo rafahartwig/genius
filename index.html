@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+
+            </ul>
+        </nav>
+    </header>
+    <main>
+
+        <div class="container">
+            <div class="box green"></div>
+            <div class="box red"></div>
+            <div class="box yellow"></div>
+            <div class="box blue"></div>
+        </div>
+
+    </main>
+
+</body>
+
+</html>
+
+<script>
+    const arrayColors = ['green', 'red', 'yellow', 'blue']
+    let awnser = true,
+        arrayAnwser = [],
+        boxGreen = document.querySelector(".green"),
+        boxRed = document.querySelector(".red"),
+        boxYellow = document.querySelector(".yellow"),
+        boxBlue = document.querySelector(".blue"),
+        container = document.querySelector('.container'),
+        i = 0,
+        tries = 0 
+
+    var gameSet = () => {
+        do{
+            var randomNumber = Math.floor(Math.random() * 4);
+            arrayAnwser.push(arrayColors[randomNumber])
+            i++
+        }while(i<10)
+
+        return arrayAnwser;
+    }
+
+    
+
+    function enlightenBox(color) {
+        switch (color) {
+            case 'green':
+                boxGreen.style.backgroundColor = "green"
+                break;
+            case 'red':
+                boxRed.style.backgroundColor = "red"
+                break;
+            case 'yellow':
+                 boxYellow.style.backgroundColor = "yellow"
+                break;
+            case 'blue':
+                 boxBlue.style.backgroundColor = "blue"
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    gameSet()
+    var gameInterval = setInterval(() => {
+            console.log(arrayAnwser[tries])
+            enlightenBox(arrayAnwser[tries])
+            setTimeout(() => {
+                boxGreen.style.backgroundColor = ""   
+                boxRed.style.backgroundColor = ""
+                boxYellow.style.backgroundColor = ""
+                boxBlue.style.backgroundColor = ""
+            },1000)
+            tries++  
+            if(tries>=arrayAnwser.length) clearInterval(gameInterval)
+     }, 3000);
+
+   
+    console.log(arrayAnwser)
+
+
+
+</script>
