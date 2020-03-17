@@ -33,6 +33,7 @@
 <script>
     const arrayColors = ['green', 'red', 'yellow', 'blue']
     let awnser = true,
+        continueGame = true,
         arrayAnwser = [],
         boxGreen = document.querySelector(".green"),
         boxRed = document.querySelector(".red"),
@@ -40,7 +41,10 @@
         boxBlue = document.querySelector(".blue"),
         container = document.querySelector('.container'),
         i = 0,
-        tries = 0 
+        tries = 0,
+        nextLevel = 0
+    
+
 
     var gameSet = () => {
         do{
@@ -75,9 +79,11 @@
     }
 
     gameSet()
-    var gameInterval = setInterval(() => {
-            console.log(arrayAnwser[tries])
-            enlightenBox(arrayAnwser[tries])
+
+        var gameInterval = setInterval(() => {
+            color = arrayAnwser[tries]
+            console.log(color)
+            enlightenBox(color)
             setTimeout(() => {
                 boxGreen.style.backgroundColor = ""   
                 boxRed.style.backgroundColor = ""
@@ -85,11 +91,14 @@
                 boxBlue.style.backgroundColor = ""
             },1000)
             tries++  
-            if(tries>=arrayAnwser.length) clearInterval(gameInterval)
-     }, 3000);
+            if(tries>=nextLevel) clearInterval(gameInterval)
+     }, 2000);
+     
+     nextLevel++
 
-   
-    console.log(arrayAnwser)
+    
+    
+
 
 
 
