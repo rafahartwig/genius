@@ -33,8 +33,9 @@
 <script>
     const arrayColors = ['green', 'red', 'yellow', 'blue']
     let awnser = true,
-        continueGame = true,
+        addListener = true,
         arrayAnwser = [],
+        arrayClicks = [],
         boxGreen = document.querySelector(".green"),
         boxRed = document.querySelector(".red"),
         boxYellow = document.querySelector(".yellow"),
@@ -42,21 +43,17 @@
         container = document.querySelector('.container'),
         i = 0,
         tries = 0,
-        nextLevel = 0
-    
+        nextLevel = 1
+
 
 
     var gameSet = () => {
-        do{
-            var randomNumber = Math.floor(Math.random() * 4);
-            arrayAnwser.push(arrayColors[randomNumber])
-            i++
-        }while(i<10)
+        var randomNumber = Math.floor(Math.random() * 4);
+        arrayAnwser.push(arrayColors[randomNumber])
 
-        return arrayAnwser;
     }
 
-    
+
 
     function enlightenBox(color) {
         switch (color) {
@@ -67,10 +64,10 @@
                 boxRed.style.backgroundColor = "red"
                 break;
             case 'yellow':
-                 boxYellow.style.backgroundColor = "yellow"
+                boxYellow.style.backgroundColor = "yellow"
                 break;
             case 'blue':
-                 boxBlue.style.backgroundColor = "blue"
+                boxBlue.style.backgroundColor = "blue"
                 break;
             default:
                 break;
@@ -78,26 +75,91 @@
 
     }
 
-    gameSet()
+    function gameCheck() {
+        if (arrayClicks.length >= arrayAnwser.length) {
+            clickString = arrayClicks.toString()
+            anwserString = arrayAnwser.toString()
+            boxGreen.classList.remove("green-click")
+            boxRed.classList.remove("red-click")
+            boxYellow.classList.remove("yellow-click")
+            boxBlue.classList.remove("blue-click")
+            if (clickString === anwserString) {
+                console.log("Proximo nivel")
+                gameNextLevel()
+            } else {
+                document.querySelector('body').innerHTML= "<h1>VOCÊ PERDEU</h1>"
+            }
+        }
+    }
 
-        var gameInterval = setInterval(() => {
+    function gameNextLevel() {
+        nextLevel++
+        arrayClicks = []
+        gameSet()
+        gameInterval()
+
+    }
+
+    function gameStart() {
+        boxGreen.classList.add("green-click")
+        boxRed.classList.add("red-click")
+        boxYellow.classList.add("yellow-click")
+        boxBlue.classList.add("blue-click")
+
+
+        if (addListener === true) {
+            addListener = false
+            boxGreen.addEventListener('click', () => {
+                arrayClicks.push('green')
+                gameCheck()
+            })
+            boxRed.addEventListener('click', () => {
+                arrayClicks.push('red')
+                gameCheck()
+            })
+            boxYellow.addEventListener('click', () => {
+                arrayClicks.push('yellow')
+                gameCheck()
+            })
+            boxBlue.addEventListener('click', () => {
+                arrayClicks.push('blue')
+                gameCheck()
+            })
+        
+        }
+    }
+
+    var gameInterval = () => {
+        setTimeout(() => {
             color = arrayAnwser[tries]
-            console.log(color)
             enlightenBox(color)
+            console.log(color)
             setTimeout(() => {
-                boxGreen.style.backgroundColor = ""   
+                boxGreen.style.backgroundColor = ""
                 boxRed.style.backgroundColor = ""
                 boxYellow.style.backgroundColor = ""
                 boxBlue.style.backgroundColor = ""
-            },1000)
-            tries++  
-            if(tries>=nextLevel) clearInterval(gameInterval)
-     }, 2000);
-     
-     nextLevel++
+            }, 1000)
+            tries++
+            if (tries >= arrayAnwser.length) {
+                gameStart()
+                clearInterval(gameInterval)
+            }
+        }, 2000);
+    }
 
-    
-    
+
+
+    gameSet()
+    gameInterval()
+
+
+
+
+
+
+
+
 
 
 
