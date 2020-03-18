@@ -75,29 +75,57 @@
 
     }
 
+
+
     function gameCheck() {
-        if (arrayClicks.length >= arrayAnwser.length) {
-            clickString = arrayClicks.toString()
-            anwserString = arrayAnwser.toString()
+        if (arrayClicks.length >= arrayAnwser.length) { 
             boxGreen.classList.remove("green-click")
             boxRed.classList.remove("red-click")
             boxYellow.classList.remove("yellow-click")
             boxBlue.classList.remove("blue-click")
+            clickString = arrayClicks.toString()
+            anwserString = arrayAnwser.toString()
             if (clickString === anwserString) {
                 console.log("Proximo nivel")
                 gameNextLevel()
             } else {
                 document.querySelector('body').innerHTML= "<h1>VOCÊ PERDEU</h1>"
+                document.querySelector('body').innerHTML += `<div>
+                    Ordem correta: ${arrayAnwser
+                    }</div>`
+                document.querySelector('body').innerHTML += `<div>
+                    Sua Reposta: ${arrayClicks
+                 }</div`
+                document.querySelector('body').innerHTML += "<button onclick='refreshPage()'>Tentar novamente</button>"
             }
         }
+    }
+
+    function refreshPage(){
+        location.reload();
     }
 
     function gameNextLevel() {
         nextLevel++
         arrayClicks = []
         gameSet()
-        gameInterval()
-
+        tries = 0
+        var gameInterval = setInterval(() => {
+            color = arrayAnwser[tries]
+            console.log(color)
+            enlightenBox(color)
+            setTimeout(() => {
+                boxGreen.style.backgroundColor = ""
+                boxRed.style.backgroundColor = ""
+                boxYellow.style.backgroundColor = ""
+                boxBlue.style.backgroundColor = ""
+            }, 1000)
+            tries++
+            if (tries >= arrayAnwser.length) {
+                clearInterval(gameInterval)
+                gameStart()
+            }
+        }, 2000);
     }
 
     function gameStart() {
@@ -129,11 +157,10 @@
         }
     }
 
-    var gameInterval = () => {
-        setTimeout(() => {
+    var gameInterval = setInterval(() => {
             color = arrayAnwser[tries]
-            enlightenBox(color)
             console.log(color)
+            enlightenBox(color)
             setTimeout(() => {
                 boxGreen.style.backgroundColor = ""
                 boxRed.style.backgroundColor = ""
@@ -142,16 +169,15 @@
             }, 1000)
             tries++
             if (tries >= arrayAnwser.length) {
-                gameStart()
                 clearInterval(gameInterval)
+                gameStart()
             }
         }, 2000);
-    }
-
+    
 
 
     gameSet()
-    gameInterval()
+    
 
 
 
