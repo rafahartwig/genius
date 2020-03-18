@@ -86,7 +86,6 @@
             clickString = arrayClicks.toString()
             anwserString = arrayAnwser.toString()
             if (clickString === anwserString) {
-                console.log("Proximo nivel")
                 gameNextLevel()
             } else {
                 document.querySelector('body').innerHTML= "<h1>VOCÊ PERDEU</h1>"
@@ -112,7 +111,6 @@
         tries = 0
         var gameInterval = setInterval(() => {
             color = arrayAnwser[tries]
-            console.log(color)
             enlightenBox(color)
             setTimeout(() => {
                 boxGreen.style.backgroundColor = ""
@@ -159,7 +157,6 @@
 
     var gameInterval = setInterval(() => {
             color = arrayAnwser[tries]
-            console.log(color)
             enlightenBox(color)
             setTimeout(() => {
                 boxGreen.style.backgroundColor = ""
