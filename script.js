@@ -57,7 +57,7 @@ function gameCheck() {
                 Sua Resposta: ${arrayClicks
              }</div`
             document.querySelector('body').innerHTML += "<button onclick='refreshPage()'>Tentar novamente</button><br /><br /><br /><br />"
-            // document.querySelector('body').innerHTML += "<input type='text' id='user' name='user' placeholder='Digite seu nome'/>"
+            document.querySelector('body').innerHTML += "<input type='text' id='user' name='user' placeholder='Digite seu nome'/>"
             document.querySelector('body').innerHTML += "<button onclick='sendData()'>Salvar Score</button>"
         }
     }
