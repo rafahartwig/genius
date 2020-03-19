@@ -1,6 +1,5 @@
 const arrayColors = ['green', 'red', 'yellow', 'blue']
-let awnser = true,
-    addListener = true,
+let addListener = true,
     arrayAnwser = [],
     arrayClicks = [],
     boxGreen = document.querySelector(".green"),
@@ -8,6 +7,7 @@ let awnser = true,
     boxYellow = document.querySelector(".yellow"),
     boxBlue = document.querySelector(".blue"),
     container = document.querySelector('.container'),
+    ranking = document.querySelector('#ranking'),
     i = 0,
     tries = 0,
     nextLevel = 1
@@ -56,13 +56,54 @@ function gameCheck() {
             document.querySelector('body').innerHTML += `<div>
                 Sua Resposta: ${arrayClicks
              }</div`
-            document.querySelector('body').innerHTML += "<button onclick='refreshPage()'>Tentar novamente</button>"
+            document.querySelector('body').innerHTML += "<button onclick='refreshPage()'>Tentar novamente</button><br /><br /><br /><br />"
+            document.querySelector('body').innerHTML += "<input type='text' id='user' name='user' placeholder='Digite seu nome'/>"
+            document.querySelector('body').innerHTML += "<button onclick='sendData()'>Salvar Score</button>"
         }
     }
 }
 
 function refreshPage(){
     location.reload();
+}
+
+function sendData(){
+    var user = document.querySelector('#user').value;
+    if(user && user != ""){
+        axios.post('https://api-genius.herokuapp.com/user', {
+            user: user,
+            nivel: arrayAnwser.length-1
+          })
+          .then(function (response) {
+            location.reload();
+          })
+          .catch(function (error) {
+          });
+    }
+}
+
+function getData(){
+    axios.get('https://api-genius.herokuapp.com/user')
+  .then(function (response) {
+    response.data.forEach(element => {
+        nodeTr = document.createElement("tr");
+        nodeTd = document.createElement("td");
+        nodeTdNivel = document.createElement("td");
+        nodeTd.setAttribute("id", element.id)
+        var textnode = document.createTextNode(element.user);
+        var nodeTdNivel = document.createTextNode(element.nivel);
+        nodeTd.appendChild(textnode);
+        nodeTr.appendChild(nodeTd);
+        nodeTr.appendChild(nodeTdNivel);
+        ranking.appendChild(nodeTr)      
+    });
+  })
+  .catch(function (error) {
+    // handle error
+  })
+  .then(function () {
+    // always executed
+  });
 }
 
 function gameNextLevel() {
@@ -135,3 +176,4 @@ var gameInterval = setInterval(() => {
 
 
 gameSet()
+getData()
